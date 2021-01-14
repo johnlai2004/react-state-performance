@@ -12,7 +12,7 @@ let state = observable({
   numOfRecords:0}
 );
 
-const Hook = observer(() => {
+const MobX = observer(() => {
 
   const editRecord = (index, fieldName, fieldValue) => {
     state.content[index][fieldName] = parseInt(fieldValue);
@@ -69,4 +69,4 @@ const Hook = observer(() => {
   );
 });
 
-export default Hook;
+export default MobX;
