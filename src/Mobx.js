@@ -1,18 +1,27 @@
-import { useState } from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 import { fileOptions } from './Common/fileOptions';
 import { fetchData } from './Common/fetchData';
 
-const Hook = () => {
 
-  const [content, setContent] = useState([]);
-  const [numOfRecords, setNumOfRecords] = useState(0);
+const setContent = content => {
+  state.content = content;
+}
+let state = observable({
+  content:[],
+  numOfRecords:0}
+);
+
+const Hook = observer(() => {
+
   const editRecord = (index, fieldName, fieldValue) => {
-    content[index][fieldName] = parseInt(fieldValue);
-    setContent([...content]);
+    state.content[index][fieldName] = parseInt(fieldValue);
   };
+  let { content, numOfRecords } = state;
+
   return (
     <div>
-    <select value={numOfRecords} onChange={e=>setNumOfRecords(e.currentTarget.value)}>
+    <select value={numOfRecords} onChange={e=>{state.numOfRecords = e.currentTarget.value;}}>
       <option value="">-- No. of Records --</option>
       {fileOptions.map(option=><option key={`o-${option.val}`} value={option.val}>{option.text}</option>)}
     </select>
@@ -58,6 +67,6 @@ const Hook = () => {
     </div>
     </div>
   );
-};
+});
 
 export default Hook;
