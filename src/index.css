@@ -28,15 +28,9 @@ code {
   padding:30px;
   display:inline-block;
 }
-#display {
-  display:grid;
+table {
   margin-top:20px;
   width:100%;
-  grid-template:auto / 50% 50%;
-  grid-gap: 20px;
-  align-items:start;
-}
-table {
   border: 1px dotted #333;
 }
 td {
