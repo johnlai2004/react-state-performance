@@ -9,8 +9,8 @@ const setContent = content => {
 }
 let state = observable({
   content:[],
-  numOfRecords:0}
-);
+  numOfRecords:0
+});
 
 const MobX = observer(() => {
 
@@ -21,11 +21,11 @@ const MobX = observer(() => {
 
   return (
     <div>
-    <select value={numOfRecords} onChange={e=>{state.numOfRecords = e.currentTarget.value;}}>
+    <h1>MobX</h1>
+    <select value={numOfRecords} onChange={async e=>{ state.numOfRecords = e.currentTarget.value; setContent(await fetchData(e.currentTarget.value))}}>
       <option value="">-- No. of Records --</option>
       {fileOptions.map(option=><option key={`o-${option.val}`} value={option.val}>{option.text}</option>)}
     </select>
-    <button onClick={async ()=>setContent(await fetchData(numOfRecords))}>Load Records</button>
     {content.length > 0 && <p>Showing <strong>{content.length}</strong> records</p>}
     <div id="display">
     <table>
