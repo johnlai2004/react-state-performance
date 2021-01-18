@@ -6,9 +6,23 @@ const Hook = () => {
 
   const [content, setContent] = useState([]);
   const [numOfRecords, setNumOfRecords] = useState(0);
+  const [multipleRowsCsv, setMultipleRowsCsv] = useState('');
+  const [isModifyingMultipleRows, setIsModifyingMultipleRows] = useState(false);
   const editRecord = (index, fieldName, fieldValue) => {
     content[index][fieldName] = parseInt(fieldValue);
     setContent([...content]);
+  };
+  const modifyMultipleRows = rowsCsv => {
+    setIsModifyingMultipleRows(true);
+    const rows = rowsCsv.split(',').map(num => parseInt(num.trim()));
+    for(let x in rows) {
+      const val = Math.round(Math.random()*10);
+      content[rows[x]]['age'] = val;
+      content[rows[x]]['name'] = val;
+      content[rows[x]]['phone'] = val;
+    }
+    setContent([...content]);
+    setIsModifyingMultipleRows(false);
   };
   return (
     <div>
@@ -18,6 +32,10 @@ const Hook = () => {
       {fileOptions.map(option=><option key={`o-${option.val}`} value={option.val}>{option.text}</option>)}
     </select>
     {content.length > 0 && <p>Showing <strong>{content.length}</strong> records</p>}
+    {content.length > 0 && <div id="multirows">
+      <input type="text" placeholder="Rows (eg. 0,35,241,5)" value={multipleRowsCsv} onChange={e=>setMultipleRowsCsv(e.currentTarget.value)} />
+      <button type="button" onClick={_ => modifyMultipleRows(multipleRowsCsv) }>{isModifyingMultipleRows ? 'Loading...' : 'Modify Rows with Random Content'}</button>
+    </div>}
     <table>
     <thead>
       <tr>

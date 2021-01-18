@@ -8,9 +8,23 @@ const setContent = content => {
   state.content = content;
 }
 let state = observable({
+  multipleRowsCsv: '',
+  isModifyingMultipleRows: false,
   content:[],
   numOfRecords:0
 });
+
+const modifyMultipleRows = rowsCsv => {
+  state.isModifyingMultipleRows = true;
+  const rows = rowsCsv.split(',').map(num => parseInt(num.trim()));
+  for(let x in rows) {
+    const val = Math.round(Math.random()*10);
+    state.content[rows[x]]['age'] = val;
+    state.content[rows[x]]['name'] = val;
+    state.content[rows[x]]['phone'] = val;
+  }
+  state.isModifyingMultipleRows = false;
+};
 
 const MobX = observer(() => {
 
@@ -27,6 +41,10 @@ const MobX = observer(() => {
       {fileOptions.map(option=><option key={`o-${option.val}`} value={option.val}>{option.text}</option>)}
     </select>
     {content.length > 0 && <p>Showing <strong>{content.length}</strong> records</p>}
+    {content.length > 0 && <div id="multirows">
+      <input type="text" placeholder="Rows (eg. 0,35,241,5)" value={state.multipleRowsCsv} onChange={e=>{state.multipleRowsCsv = e.currentTarget.value;}} />
+      <button type="button" onClick={_ => modifyMultipleRows(state.multipleRowsCsv) }>{state.isModifyingMultipleRows ? 'Loading...' : 'Modify Rows with Random Content'}</button>
+    </div>}
     <table>
     <thead>
       <tr>

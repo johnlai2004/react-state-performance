@@ -28,6 +28,14 @@ code {
   padding:30px;
   display:inline-block;
 }
+#multirows {
+  padding:20px;
+  background:#eee;
+  display:flex;
+  justify-content:flex-end;
+  align-content:center;
+  flex-wrap:wrap;
+}
 table {
   margin-top:20px;
   width:100%;
